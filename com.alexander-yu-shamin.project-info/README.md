@@ -28,4 +28,3 @@ Capabilities:
 ![project-info](Documentation~/images/project-info.png)
 
 </div>
-
