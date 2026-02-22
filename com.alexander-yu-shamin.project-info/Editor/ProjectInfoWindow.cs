@@ -277,24 +277,26 @@ namespace ProjectInfo.Editor
             titleContent = new GUIContent(GetWindowName(CurrentWindowTitleType));
         }
 
-        private string DrawInfoRowField(InfoRow infoRow, params GUILayoutOption[] options)
+        private string DrawInfoRowField(InfoRow infoRow)
         {
             if (infoRow == null)
             {
                 return string.Empty;
             }
 
+            var height = GUI.skin.textField.CalcHeight(new GUIContent(infoRow.Message), EditorGUIUtility.currentViewWidth);
             if (infoRow.Color.HasValue)
             {
                 var prevColor = GUI.color;
                 GUI.color = infoRow.Color.Value;
-                var inputString = EditorGUILayout.TextField(infoRow.Title, infoRow.Message, options);
+                var inputString = EditorGUILayout.TextField(infoRow.Title, infoRow.Message, GUILayout.Height(height));
                 GUI.color = prevColor;
                 return inputString;
             }
             else
             {
-                return EditorGUILayout.TextField(infoRow.Title, infoRow.Message, options);
+                var inputString = EditorGUILayout.TextField(infoRow.Title, infoRow.Message,GUILayout.Height(height));
+                return inputString;
             }
         }
 

@@ -1,6 +1,6 @@
 {
   "name": "com.alexander-yu-shamin.project-info",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "displayName": "AYS: Project Info",
   "description": "A simple editor window that displays key information about your Unity project.",
   "__unity": "6000.0",
