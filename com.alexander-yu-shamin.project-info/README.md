@@ -22,6 +22,13 @@ Perfect for quick insights without digging through menus.
 Capabilities:
 - Saves its state between sessions
 - Quickly copy all parameters or only the selected ones
+- Right-click context menu to quickly open the Workspace or Data path folders
+
+![context-menu](Documentation~/images/context-menu.png)
+
+# How to Use
+
+- Window ➡ General ➡ Project Info
 
 <div align="center">
 

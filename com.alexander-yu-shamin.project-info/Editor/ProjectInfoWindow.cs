@@ -6,13 +6,11 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Build;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 
 namespace ProjectInfo.Editor
 {
-    public class ProjectInfoWindow : EditorWindow
+    public class ProjectInfoWindow : EditorWindow, IHasCustomMenu
     {
         private enum WindowTitleType
         {
@@ -59,6 +57,24 @@ namespace ProjectInfo.Editor
             var window = GetWindow<ProjectInfoWindow>(DefaultWindowTitle);
             window.autoRepaintOnSceneChange = true;
             window.Show();
+        }
+
+        public void AddItemsToMenu(GenericMenu menu)
+        {
+            menu.AddItem(new GUIContent("Open Workspace"), false, () =>
+            {
+                var dataDir = new DirectoryInfo(Application.dataPath);
+                var projectDir = dataDir.Parent;
+                EditorUtility.RevealInFinder(projectDir.FullName);
+            });
+
+            menu.AddItem(new GUIContent("Open Data Path"), false, () =>
+            {
+                EditorUtility.RevealInFinder(Application.dataPath);
+            });
+
+            menu.AddItem(new GUIContent("Update Info"), false, UpdateInfo);
+            menu.AddItem(new GUIContent("Copy All Info"), false, CopyAllInfo);
         }
 
         private void OnGUI()
@@ -112,22 +128,27 @@ namespace ProjectInfo.Editor
 
             if (GUILayout.Button("Copy All"))
             {
-                var sb = new StringBuilder();
-                foreach (var (group, infoGroup) in EntityMap)
-                {
-                    sb.AppendLine(group);
-                    foreach (var e in infoGroup.InfoRows)
-                    {
-                        sb.AppendLine($"  {e.Title} {e.Message}");
-                    }
-
-                    sb.AppendLine();
-                }
-
-                EditorGUIUtility.systemCopyBuffer = sb.ToString();
+                CopyAllInfo();
             }
 
             EditorGUILayout.EndVertical();
+        }
+
+        private void CopyAllInfo()
+        {
+            var sb = new StringBuilder();
+            foreach (var (group, infoGroup) in EntityMap)
+            {
+                sb.AppendLine(group);
+                foreach (var e in infoGroup.InfoRows)
+                {
+                    sb.AppendLine($"  {e.Title} {e.Message}");
+                }
+
+                sb.AppendLine();
+            }
+
+            EditorGUIUtility.systemCopyBuffer = sb.ToString();
         }
 
         protected void OnEnable()

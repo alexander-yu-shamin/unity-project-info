@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-2-24
+
+### Added 
+
+- Context menu
+- Docs
+
 ## [0.2.1] - 2026-2-22
 
 ### Fix
